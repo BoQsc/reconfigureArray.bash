@@ -97,8 +97,7 @@ function reconstructArray(){
 		if [ $isInsertAfter == true ] &&[ $i -eq 5 ]; then
 			NEW_ARRAY+="'randomExample.desktop', ";
 		fi
-		
-		# Relative Prepending
+
 		if [ $isInsertBefore == true ] &&[ $i -eq $(expr 5 - 2) ]; then
 			NEW_ARRAY+="'randomExample.desktop', ";
 		fi
@@ -111,8 +110,9 @@ function reconstructArray(){
 		# Check if Variable is not empty and:
 		# Remove empty space and a comma symbol from the end of array []
 		[ ! "$NEW_ARRAY" == "[" ] && {
-		declare NEW_ARRAY=${NEW_ARRAY::-2};
+			declare NEW_ARRAY=${NEW_ARRAY::-2};
 		}
+
 		# Append element to the end of the Array
 		[ $isAfter == true ] && {
 			NEW_ARRAY+=", 'randomExample.desktop'"; 
