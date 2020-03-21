@@ -97,8 +97,9 @@ function reconstructArray(){
 		if [ $isInsertAfter == true ] &&[ $i -eq 5 ]; then
 			NEW_ARRAY+="'randomExample.desktop', ";
 		fi
-
-		if [ $isInsertBefore == true ] &&[ $i -eq $(expr 5 - 1) ]; then
+		
+		# Relative Prepending
+		if [ $isInsertBefore == true ] &&[ $i -eq $(expr 5 - 2) ]; then
 			NEW_ARRAY+="'randomExample.desktop', ";
 		fi
 	
