@@ -1,0 +1,1 @@
+# reconfigureArray.bash
