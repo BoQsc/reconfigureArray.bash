@@ -55,6 +55,7 @@ function reconstructArray(){
 	local isRemove=false;
 
 	local isInsertAfter=false;
+	local isInsertBefore=true; 
 
 	
 	local i=0;
@@ -92,6 +93,10 @@ function reconstructArray(){
 		
 		# Append after nth element of the Array
 		if [ $isInsertAfter == true ] &&[ $i -eq 5 ]; then
+			NEW_ARRAY+="'randomExample.desktop', ";
+		fi
+
+		if [ $isInsertBefore == true ] &&[ $i -eq $(( 5-1 )) ]; then
 			NEW_ARRAY+="'randomExample.desktop', ";
 		fi
 	
