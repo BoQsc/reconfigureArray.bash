@@ -48,6 +48,12 @@ function reconstructArray(){
 
 	# Documentation about capability to append large portion of Array items. 
 
+	local isBefore=false;
+	local isAfter=false;
+
+	local isRemove=false;
+
+	local isInsertAfter=false;
 
 	
 	local i=0;
@@ -57,10 +63,6 @@ function reconstructArray(){
 	# Start Array
 	local NEW_ARRAY="[";
 	
-	local isBefore=false;
-	local isAfter=true;
-
-	local isRemove=true;
 	# Append element to the start of the Array
 	[ $isBefore == true ] && {
 		local NEW_ARRAY+="'randomExample.desktop', ";  
@@ -69,7 +71,7 @@ function reconstructArray(){
 	while [[ ${TEXT_TO_PARSE} =~ (${REGEX_PATTERN}) ]]; do
 		
 		# Loop Increment
-		i=$((i+1));
+		let i++;
 		echo "$i ${BASH_REMATCH[1]}";
 
 
@@ -84,7 +86,7 @@ function reconstructArray(){
 		fi
 		
 		# Append after nth element of the Array
-		if [ $i -eq 5 ]; then
+		if [ $isInsertAfter == true ] &&[ $i -eq 5 ]; then
 			NEW_ARRAY+="'randomExample.desktop', ";
 		fi
 	
@@ -92,8 +94,10 @@ function reconstructArray(){
 		# in the array TEXT_TO_PARSE, remove it from the array
 		TEXT_TO_PARSE=${TEXT_TO_PARSE##*${BASH_REMATCH[1]}};
 	done
+
+		# Check if Variable is not empty and:
 		# Remove empty space and a comma symbol from the end of array 
-		declare NEW_ARRAY=${NEW_ARRAY::-2};
+		[ -z $NEW_ARRAY ] && declare NEW_ARRAY=${NEW_ARRAY::-2};
 
 		# Append element to the end of the Array
 		[ $isAfter == true ] && {
