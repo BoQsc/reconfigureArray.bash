@@ -76,7 +76,11 @@ function reconstructArray(){
 
 
 		# If isRemove is enabled, skip the element and populate the array
-		if [ $isRemove == true ] && [ ! $i -eq 5 ]; then 
+		if [ $isRemove == true ]; then 
+			 [ ! $i -eq 1 ] && NEW_ARRAY+="${BASH_REMATCH[1]}, ";
+		fi
+
+		if [ $isRemove == false ]; then 
 			NEW_ARRAY+="${BASH_REMATCH[1]}, ";
 		fi
 	
@@ -96,9 +100,10 @@ function reconstructArray(){
 	done
 
 		# Check if Variable is not empty and:
-		# Remove empty space and a comma symbol from the end of array 
-		[ -z "${NEW_ARRAY}" ] && declare NEW_ARRAY=${NEW_ARRAY::-2};
-
+		# Remove empty space and a comma symbol from the end of array []
+		[ ! "$NEW_ARRAY" == "[" ] && {
+		declare NEW_ARRAY=${NEW_ARRAY::-2};
+		}
 		# Append element to the end of the Array
 		[ $isAfter == true ] && {
 			NEW_ARRAY+=", 'randomExample.desktop'"; 
