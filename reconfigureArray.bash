@@ -49,10 +49,12 @@ function reconstructArray(){
 
 	# Documentation about capability to append large portion of Array items. 
 
-	local isBefore=false;
-	local isAfter=false;
+
 
 	local isRemove=false;
+
+	local isBefore=false; #before array
+	local isAfter=false;  #after array
 
 	local isInsertAfter=false;
 	local isInsertBefore=true; 
