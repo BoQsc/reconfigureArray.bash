@@ -1,127 +1,85 @@
 #!/bin/bash
+
+if [ $# -eq 0 ]
+  then
+    echo "No arguments supplied"
+fi
+
+if [ -z "$1" ]
+  then
+    echo "No argument supplied"
+fi
+
+	#local isRemove=false;
+
+	#local isBefore=false; 
+	#local isAfter=false;  
+
+	#local isInsertAfter=false;
+	#local isInsertBefore=true; 
+
+
 function reconstructArray(){
 	local TEXT_TO_PARSE=$1;
 	local ARRAY_ELEMENT=$2;
-
-	#TODO Command Line Interface
-	# MANIPULATION_MODE
-	# Remove, Add, Replace
 	local MANIPULATION_MODE=$3;
-	# Position in the array
-	# Search In Array items and remove
-
-	# Append to the start, end or after
-	# Array item search/find
-		
-		# Search mode or Position mode
-		# search "" add after "$ArrayElement"
-		# search "" remove after "$ArrayElement"
-	# Array item position location
-		# locate "" add "$ArrayElement"
-		# Array prepositions
-			# locate "" add after "$ArrayElement"
-			# locate "" add before "$ArrayElement"
-			# locate "" remove after "$ArrayElement"
-			# locate "" remove before "$ArrayElement"
-	# Replace 
-	
-	# search for "" in "$input" add after ""
-	# locate "" in "$input" add after ""
-	# locate "" in "$input" replace with ""
-
-	# search and delete "" in ""
-	# search and delete "" in ""
-	# locate and delete "" in ""
-	# locate and delete "" in ""
-	
-
-	# append "" in "" to ""
 
 
-	# [ $isLocate ]
-	# [ $isSearch ]
-	# [ $isAdd ]
-	# [ $isRemove ]
-	# [ $isReplace ]
-	# [ $isBefore ]
-	# [ $isAfter ]
-	# [ $isUpdate ] - remove and add in the same position
-
-	# Documentation about capability to append large portion of Array items. 
-
-
-
-	local isRemove=false;
-
-	local isBefore=false; #before array
-	local isAfter=false;  #after array
-
-	local isInsertAfter=false;
-	local isInsertBefore=true; 
-
+	local insertBefore="'randomExample.desktop', ";
 	
 	local i=0;
 	local REGEX_PATTERN="'.([^']*)'";
-	local GLOB_PATTERN_MATCHING="\'*google*\'"
+	local GLOB_PATTERN_MATCHING="\'*google*\'";
 
-	# Start Array
-	local NEW_ARRAY="[";
 	
-	# Append element to the start of the Array
-	[ $isBefore == true ] && {
-		local NEW_ARRAY+="'randomExample.desktop', ";  
+	local NEW_ARRAY="[";
+	echo ---------
+	[ ! -z "${insertBefore}" ] && {
+		local NEW_ARRAY+="$insertBefore";  
 	}
 
 	while [[ ${TEXT_TO_PARSE} =~ (${REGEX_PATTERN}) ]]; do
 		
-		# Loop Increment
 		let i++;
 		echo "$i ${BASH_REMATCH[1]}";
 
-
-		# If isRemove is enabled, then skip the element and populate the array
-		if [ $isRemove == true ]; then 
-			 [ ! $i -eq 1 ] && NEW_ARRAY+="${BASH_REMATCH[1]}, ";
-		fi
-
-		if [ $isRemove == false ]; then 
+		if [ -z "${isRemove}" ]; then 
 			NEW_ARRAY+="${BASH_REMATCH[1]}, ";
 		fi
 	
-		# Search element by text pattern
+		if [ ! -z "${isRemove}" ]; then 
+			 [ ! $i -eq 1 ] && NEW_ARRAY+="${BASH_REMATCH[1]}, ";
+		fi
+		
 		if  [[ ${BASH_REMATCH[1]} == ${GLOB_PATTERN_MATCHING} ]]; then
 			echo "^_ Found a Match at $i Array position"
 		fi
 		
-		# Append after nth element of the Array
-		if [ $isInsertAfter == true ] &&[ $i -eq 5 ]; then
+		
+		if [ ! -z "${isInsertAfter}" ] &&[ $i -eq 5 ]; then
 			NEW_ARRAY+="'randomExample.desktop', ";
 		fi
 
-		if [ $isInsertBefore == true ] &&[ $i -eq $(expr 5 - 2) ]; then
+		if [ ! -z "${isInsertBefore}" ] &&[ $i -eq $(expr 5 - 2) ]; then
 			NEW_ARRAY+="'randomExample.desktop', ";
 		fi
-	
-		# If matched Regex Result BASH_REMATCH matches an Item 
-		# in the array TEXT_TO_PARSE, remove it from the array
+		
 		TEXT_TO_PARSE=${TEXT_TO_PARSE##*${BASH_REMATCH[1]}};
 	done
 
-		# Check if Variable is not empty and:
-		# Remove empty space and a comma symbol from the end of array []
 		[ ! "$NEW_ARRAY" == "[" ] && {
 			declare NEW_ARRAY=${NEW_ARRAY::-2};
 		}
 
-		# Append element to the end of the Array
-		[ $isAfter == true ] && {
+		
+		[ ! -z "${isAfter}" ] && {
 			NEW_ARRAY+=", 'randomExample.desktop'"; 
 		}
-
-		# End Array
+		
 		NEW_ARRAY+="]";
 		echo "";
 		echo "Newly constructed Array: ";
 		echo "$NEW_ARRAY";
+
 }
 reconstructArray "$(gsettings get org.gnome.shell favorite-apps)";
