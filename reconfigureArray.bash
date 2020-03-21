@@ -97,7 +97,7 @@ function reconstructArray(){
 
 		# Check if Variable is not empty and:
 		# Remove empty space and a comma symbol from the end of array 
-		[ -z $NEW_ARRAY ] && declare NEW_ARRAY=${NEW_ARRAY::-2};
+		[ -z "${NEW_ARRAY}" ] && declare NEW_ARRAY=${NEW_ARRAY::-2};
 
 		# Append element to the end of the Array
 		[ $isAfter == true ] && {
