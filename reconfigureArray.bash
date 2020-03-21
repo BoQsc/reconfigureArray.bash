@@ -45,6 +45,7 @@ function reconstructArray(){
 	# [ $isReplace ]
 	# [ $isBefore ]
 	# [ $isAfter ]
+	# [ $isUpdate ] - remove and add in the same position
 
 	# Documentation about capability to append large portion of Array items. 
 
@@ -75,7 +76,7 @@ function reconstructArray(){
 		echo "$i ${BASH_REMATCH[1]}";
 
 
-		# If isRemove is enabled, skip the element and populate the array
+		# If isRemove is enabled, then skip the element and populate the array
 		if [ $isRemove == true ]; then 
 			 [ ! $i -eq 1 ] && NEW_ARRAY+="${BASH_REMATCH[1]}, ";
 		fi
