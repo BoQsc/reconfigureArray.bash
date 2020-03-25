@@ -71,7 +71,13 @@ function reconstructArray(){
 			}
 		}
 	fi
-
+	if [ "$MANIPULATION_MODE" == "delete" ]; then
+		local QUERY_OPTION=$3;
+		[ "$QUERY_OPTION" == "at" ] && {
+			local ARRAY_ITEM_POSITION=$4; 
+			local isRemove=true;
+		}
+	fi
 
 	#local INSERT_BEFORE_ARRAY="'randomExample.desktop', ";
 	#local INSERT_AFTER_ARRAY=", 'randomExample.desktop'";
@@ -149,7 +155,10 @@ function reconstructArray(){
 		echo "$NEW_ARRAY";
 
 }
-#reconstructArray "$(gsettings get org.gnome.shell favorite-apps)" insert "'randomExample.desktop', " after 5;
-#reconstructArray "$(gsettings get org.gnome.shell favorite-apps)" replace at 5 with "'randomExample.desktop', ";
-#reconstructArray "$(gsettings get org.gnome.shell favorite-apps)" search "google" and "replace with" "'randomExample.desktop', ";
-reconstructArray "$(gsettings get org.gnome.shell favorite-apps)" search "google" and remove;
+
+declare ARRAY=$(gsettings get org.gnome.shell favorite-apps);
+#reconstructArray "$ARRAY" insert "'randomExample.desktop', " after 5;
+#reconstructArray "$ARRAY" replace at 5 with "'randomExample.desktop', ";
+#reconstructArray "$ARRAY" search "google" and "replace with" "'randomExample.desktop', ";
+#reconstructArray "$ARRAY" search "google" and remove;
+reconstructArray "$ARRAY" delete at 5;
