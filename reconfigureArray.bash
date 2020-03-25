@@ -66,6 +66,9 @@ function reconstructArray(){
 				local ARRAY_ELEMENT=$6;
 				local INSERT_AFTER_POSITION=$ARRAY_ELEMENT;
 			}
+			[ "$QUERY_OPTION_TWO" == "remove" ] && {
+				local ARRAY_ELEMENT;
+			}
 		}
 	fi
 
@@ -102,7 +105,7 @@ function reconstructArray(){
 				local ARRAY_ITEM_POSITION=$i;
 				echo "^_ Found a Match at $i Array position"
 			fi
-			if [ "$QUERY_OPTION_TWO" == "replace with" ]; then
+			if [ "$QUERY_OPTION_TWO" == "replace with" ] || [ "$QUERY_OPTION_TWO" == "remove" ]; then
 				[ ! $i -eq $ARRAY_ITEM_POSITION ] && NEW_ARRAY+="${BASH_REMATCH[1]}, ";
 			fi
 		fi
@@ -148,4 +151,5 @@ function reconstructArray(){
 }
 #reconstructArray "$(gsettings get org.gnome.shell favorite-apps)" insert "'randomExample.desktop', " after 5;
 #reconstructArray "$(gsettings get org.gnome.shell favorite-apps)" replace at 5 with "'randomExample.desktop', ";
-reconstructArray "$(gsettings get org.gnome.shell favorite-apps)" search "google" and "replace with" "'randomExample.desktop', ";
+#reconstructArray "$(gsettings get org.gnome.shell favorite-apps)" search "google" and "replace with" "'randomExample.desktop', ";
+reconstructArray "$(gsettings get org.gnome.shell favorite-apps)" search "google" and remove;
